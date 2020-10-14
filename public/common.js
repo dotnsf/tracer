@@ -42,7 +42,7 @@ function selectTracer( tracer, isTop ){
     + '<div class="card-body">'
     + '<h4 class="card-title">' + tracer.lotno + '</h4>'
     + '<h5 class="card-subtitle">' + subtitle + '</h5>'
-    + '<p class="card-text"><pre>' + JSON.stringify( tracer, null, 2 ) + '</pre></p>'
+    + '<p class="card-text"><pre style="text-align: left;">' + JSON.stringify( tracer, null, 2 ) + '</pre></p>'
     + '</div>'
     + '</div>';
 
