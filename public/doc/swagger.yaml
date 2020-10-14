@@ -1,0 +1,135 @@
+swagger: '2.0'
+info:
+  description: Tracer API ドキュメント
+  version: 0.0.1
+  title: Tracer REST APIs
+host: localhost:8080
+basePath: /dbapi
+tags:
+  - name: tracer
+    description: Tracer related API
+schemes:
+  - http
+  - https
+paths:
+  /tracers:
+    get:
+      tags:
+        - tracer
+      summary: Tracer 複数取得
+      description: Tracer 複数取得
+      parameters:
+        - name: user_id
+          type: string
+          in: query
+          description: user id
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+  /tracer:
+    post:
+      tags:
+        - tracer
+      summary: tracer 作成
+      description: tracer 作成
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/TracerRequest'
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+  /tracer/{id}:
+    get:
+      tags:
+        - tracer
+      summary: tracer 取得
+      description: tracer 取得
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: Tracer ID
+          required: true
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+    put:
+      tags:
+        - tracer
+      summary: tracer 更新
+      description: tracer 更新
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: Tracer ID
+          required: true
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/TracerRequest'
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+    delete:
+      tags:
+        - tracer
+      summary: tracer 削除
+      description: tracer 削除
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: Tracer ID
+          required: true
+        - name: user_id
+          type: string
+          in: query
+          description: user id
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+definitions:
+  TracerRequest:
+    type: object
+    properties:
+      lotno:
+        type: string
+        description: ロット番号
+      prev_lotnos:
+        type: array
+        description: 製造材料のロット番号
+      user_id:
+        type: string
+        description: ユーザーID
+      name:
+        type: string
+        description: 名前
+      comment:
+        type: string
+        description: コメント
+      url:
+        type: string
+        description: URL

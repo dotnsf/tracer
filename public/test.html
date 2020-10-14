@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<title>test</title>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<link rel="shortcut icon" href="/icon.png" type="image/png"/>
+<link rel="icon" href="/icon.png" type="image/png"/>
+<link rel="apple-touch-icon" href="/icon.png"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="apple-mobile-web-app-title" content="Test"/>
+
+<style type="text/css">
+html, body{
+  text-align: center;
+  background-color: #fafafa;
+  font-size: 20px;
+  color: #333;
+}
+.mycard{
+  margin: 55px 0;
+}
+.mycard::before{
+  content: url(./chain.png);
+  margin: 0px;
+  position: absolute;
+  top: -52px;
+  left: 10px;
+}
+.mycard::after{
+  content: url(./chain.png);
+  margin: 0px;
+  position: absolute;
+  top: -52px;
+  right: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="mydiv" style="padding:80px 0;">
+  <div class="card text-white bg-primary border-danger">
+    <div class="card-body">
+      <h4 class="card-title">Title #0</h4>
+      <p class="card-text">Text for #0</p>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function(){
+  for( var i = 1; i <= 5; i ++ ){
+    var div = '<div class="card text-white bg-primary border-danger mycard">'
+      + '<div class="card-body">'
+      + '<h4 class="card-title">Title #' + i + '</h4>'
+      + '<p class="card-text">Text for #' + i + '</p>'
+      + '</div>'
+      + '</div>';
+    $('#mydiv').append( div );
+  }
+});
+</script>
+</body>
+</html>
