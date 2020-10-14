@@ -29,7 +29,7 @@ function selectTracer( tracer, isTop ){
   var subtitle = '[';
   for( var i = 0; i < prev_lotnos.length; i ++ ){
     var prev_lotno = prev_lotnos[i];
-    var a = '<a href="#" onClick="searchTracersByLotno(\'' + prev_lotno + '\');">' + prev_lotno + '</a>';
+    var a = '<a href="#" id="a_' + prev_lotno + '" onClick="searchTracersByLotno(\'' + prev_lotno + '\');">' + prev_lotno + '</a>';
     if( i == 0 ){
       subtitle += ' ' + a;
     }else{
@@ -50,6 +50,13 @@ function selectTracer( tracer, isTop ){
 }
 
 async function searchTracersByLotno( lotno ){
+  var visited = $('#a_'+lotno).attr( 'visited' );
+  if( visited ){
+    return;
+  }
+
+  $('#a_'+lotno).attr( 'visited', '1' );
+
   var tracers = await searchLotNo( lotno );
 
   //. 現時点では tracers.length == 0 or 1 の想定（ただし 0 の時はエラー？）
