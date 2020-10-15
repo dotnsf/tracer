@@ -12,11 +12,16 @@ async function searchLotNo( lotno ){
         }
       },
       error: function( e0, e1, e2 ){
-        console.log( e0, e1, e2 );
+        //console.log( e0, e1, e2 );  //. 存在しない場合もここ
         resolve( [] );
       }
     });
   });
+}
+
+function selectTracer2( lotno ){
+  $('#tracer_body').html( '<div id="' + lotno + '"></div>' );
+  generateTracerBlock( lotno );
 }
 
 function selectTracer( tracer, isTop ){
@@ -126,5 +131,64 @@ function timestamp2datetime( ts ){
     return datetime;
   }else{
     return "";
+  }
+}
+
+async function generateTracerBlock( lotno ){
+  //. 最初の一回だけは外側の div の id を lotno に変更しておく必要がある
+
+  var tracers = await searchLotNo( lotno );
+  if( tracers.length > 0 ){
+    var tracer = tracers[0];
+    var text = JSON.stringify( tracer, null, 2 );
+
+    addMyTab( lotno, text );
+    addTab( lotno );
+  }
+}
+
+function addMyTab( id, text ){
+  //console.log( 'addMyTab: id = ' + id );
+  var div = '<div class="myblock">'
+    + '<h3>' + id + '</h3>'
+    + '<pre style="text-align: left;">'
+    //+ '#' + id                    //. テキスト本文
+    + text
+    + '</pre>'
+    + '<div class="mytabs" id="mytab_' + id + '">'
+    + '</div>'
+    + '</div>';
+  $('#'+id).html( div );
+}
+
+async function addTab( id ){
+  //console.log( 'addTab: id = ' + id );
+  //. id をロット番号とする部品の prev_lotnos を求める必要がある
+  var tracers = await searchLotNo( id );
+
+  if( tracers.length > 0 ){
+    var tracer = tracers[0];
+    var prev_lotnos = tracer.prev_lotnos;
+
+    var ul = '<ul class="nav nav-tabs">';
+    var div = '<div class="tab-content">';
+
+    for( var i = 0; i < prev_lotnos.length; i ++ ){
+      var prev_lotno = prev_lotnos[i];
+      var prev_lotno = prev_lotnos[i];
+      ul += '<li class="nav-item"><a href="#' + prev_lotno + '" class="nav-link' + ( i == 0 ? ' active' : '' ) + '" data-toggle="tab">' + prev_lotno + '</a></li>';
+      div += '<div id="' + prev_lotno + '" class="tab-pane' + ( i == 0 ? ' active' : '' ) + '"></div>';
+    }
+
+    ul += '</ul>';
+    div += '</div>';
+
+    $('#mytab_'+id).html( ul + div );
+
+    //. 遡れる場合は遡って処理する
+    for( var i = 0; i < prev_lotnos.length; i ++ ){
+      var prev_lotno = prev_lotnos[i];
+      generateTracerBlock( prev_lotno );
+    }
   }
 }

@@ -81,7 +81,8 @@ $(function(){
           var tracer = result.tracers[i];
           var tr = '<tr id="tracer_' + tracer._id + '">'
             + '<td>' + ( i + 1 ) + '</td>'
-            + "<td><a href='#' onClick='selectTracer(" + JSON.stringify( tracer ) + ", true );'>" + tracer.lotno + "</a></td>"
+            //+ "<td><a href='#' onClick='selectTracer(" + JSON.stringify( tracer ) + ", true );'>" + tracer.lotno + "</a></td>"
+            + "<td><a href='#' onClick='selectTracer2(\"" + tracer.lotno + "\");'>" + tracer.lotno + "</a></td>"
             + '<td>' + tracer.prev_lotnos + '</td>'
             + '<td>' + tracer.name + '</td>'
             + '<td>' + tracer.updated + '</td>'
